@@ -1,8 +1,5 @@
 ---
 title: "About this website"
-output: 
-  html_document:
-    theme: cerulean
 ---
 
 This website was coded by Maria Serafini using RMarkdown to do all the hard work. 
