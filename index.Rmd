@@ -1,23 +1,22 @@
 ---
-title: "My awesome website"
+title: "Maria A. Serafini"
 output: 
   html_document:
     toc: true
     toc_float: true
 ---
 
-# This is my awesome website
 
-![](https://media.giphy.com/media/drXGoW1iudhKw/giphy.gif)
+<img src="images/MAS_headshot.jpg" style="width:40%">
 
-You can do everything you might usually do. 
+ 
+## About
 
-This means you can add text. 
+Maria A. Serafini is an MS Candidate in Biostatistics at the Columbia University Mailman School of Public Health. She has spent the past seven years working in clinical research at the Center for Behavioral Cardiovascular Health (CBCH) at Columbia University Irving Medical Center, where her work focuses on using wearable devices to study movement behaviors and cardiovascular health.
 
-This website is an example coming from [P8105](https://p8105.com/making_websites.html) making websites today! Learn more about this site [here](about.html)
+Most recently, Maria served as Project Coordinator for CBCH’s Actigraphy Core under Dr. Keith Diaz, overseeing the operations of several NIH-funded studies involving accelerometry and behavioral interventions. She is developing expertise in statistical modeling, data visualization, and reproducible research using R, and is passionate about bridging methodological innovation with applied research to advance equitable, data-driven approaches to cardiovascular disease prevention.
 
-To show that you can just use RMD like normal, check out [this page](plots.html) with plots.
 
-Here's a picture
+
 
 
