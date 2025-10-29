@@ -6,7 +6,7 @@ navbar:
     - text: "Dashboard"
       href: dashboard.html      
     - text: "Resume"
-      href: https://drive.google.com/file/d/1yIUcPCw4donjhBT4iUrVsJN6U8XHLGU-/view?usp=sharing
+      href: https://drive.google.com/file/d/1QQCl9kVFCPy8MBR9sG1NU6l4SbIAdfhn/view?usp=sharing
     - icon: fa-envelope fa-lg
       href: mailto:<mas2514@cumc.columbia.edu>
     - icon: fa-github fa-lg
