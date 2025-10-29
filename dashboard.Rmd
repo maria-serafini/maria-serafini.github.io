@@ -1,5 +1,5 @@
 ---
-title: "Flexdashboard"
+title: "NYC Restaurant Inpsection Dashboard"
 output: 
   flexdashboard::flex_dashboard:
     orientation: columns
@@ -15,69 +15,89 @@ library(p8105.datasets)
 
 
 ```{r}
-data("nyc_airbnb") 
+data("rest_inspec")
 
-nyc_airbnb_df <-
-  nyc_airbnb |> 
-  mutate(
-    rating = review_scores_location / 2
-  ) |> 
-  select(
-    neighbourhood_group, neighbourhood, rating, price, room_type, lat, long
-  ) |> 
+
+#Chart A
+pizza_bagel_df <-
+  rest_inspec |> 
+  select(cuisine_description, boro, grade, score, latitude, longitude) |> 
   filter(
-    neighbourhood_group == "Manhattan", 
-    room_type == "Entire home/apt", 
-    price <= 500,
-    price >= 100
-  )
+    str_detect(cuisine_description, "[Pp][Ii][Zz][Zz][Aa]") | 
+    str_detect(cuisine_description, "[Bb][Aa][Gg][Ee][Ll]")
+    ) |>
+  drop_na() 
+
+
+# Chart B
+inspec_score_df <- 
+  rest_inspec |> 
+  select(boro, score, critical_flag) |> 
+  filter(
+    boro != "0", 
+    score >= 2, 
+    critical_flag == "Y") |> 
+  drop_na()
+
+
+# Chart C
+grade_boro_df <- 
+  rest_inspec |> 
+  select(boro, grade) |> 
+  drop_na() |> 
+  filter(
+    grade == "A", 
+    boro != "0") |> 
+  count(boro) 
 ```
 
 
 Column {data-width=650}
 -----------------------------------------------------------------------
 
-### Chart A
+### Food Inspection Grades and Scores of Pizza and Bagel Spots in NYC
 
 ```{r}
-nyc_airbnb_df |> 
+pizza_bagel_df |> 
+  filter(
+    grade == c("A", "B", "C"),
+    longitude != 0, 
+    latitude != 0) |> 
   mutate(
-    label = str_c("Price: $", price) 
+    label = str_c("Inspection Grade:", grade, "\nInspection Score:", score)
   ) |> 
   plot_ly(
-    x = ~lat, y = ~long, color = ~price,
-    text = ~ label,
-    type = "scatter", mode = "markers", alpha = 0.5
-  )
+    x = ~longitude, y = ~latitude, type = "scatter", mode = "markers", 
+    symbol = ~cuisine_description, color = ~grade , 
+    text = ~label, alpha = 0.5, colors = "viridis")
 ```
 
 Column {data-width=350}
 -----------------------------------------------------------------------
 
-### Chart B
+### Distribution of Restaurant Inspection Scores by NYC Bourough 
 
 ```{r}
-nyc_airbnb_df |> 
+inspec_score_df |> 
   mutate(
-    neighbourhood = fct_reorder(neighbourhood, price)
+    boro = fct_reorder(boro, score)
   ) |> 
   plot_ly(
-    x = ~neighbourhood, y = ~price, color = ~neighbourhood, 
+    x = ~boro, y = ~score, color = ~boro, 
     type = "box", colors = "viridis"
   )
 ```
 
-### Chart C
+### Count of Restaurants with 'A' Inspection Grades by NYC Bourough
 
 ```{r}
-nyc_airbnb_df |> 
-  count(neighbourhood) |> 
+grade_boro_df |> 
   mutate(
-    neighbourhood = fct_reorder(neighbourhood, n)
-  ) |> 
+    boro = fct_reorder(boro, n)
+    ) |> 
   plot_ly(
-    x = ~neighbourhood, y = ~n,
-    type = "bar"
-  )
+    x = ~boro, y = ~n, color = ~boro,
+    type = "bar", colors = "viridis"
+    )
 ```
 
